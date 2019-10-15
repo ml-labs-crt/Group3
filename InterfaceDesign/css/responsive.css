@@ -1,0 +1,46 @@
+/*--Media Quaries--*/
+@media (max-width: 767px) {
+    .caption h1{
+        font-size: 2.3rem;
+        letter-spacing: .15rem;
+        padding-bottom: 1rem;
+    }
+    .caption h3{
+        font-size: 1.2rem;
+        padding-bottom: 1.2rem;
+    }
+    .btn-lg {
+        padding: .5rem 1rem;
+        font-size: 1rem;
+    }
+    .narrow h1{
+        font-size: 1.5rem;
+    }
+    .ourTeam img{
+        max-width: 50%;
+        display: block;
+        margin: 0 auto;
+    }
+    .counter{
+        text-align: center;
+    }
+
+}
+/*============ BOOTSTRAP BREAK POINTS:
+
+Extra small (xs) devices (portrait phones, less than 576px)
+No media query since this is the default in Bootstrap
+
+Small (sm) devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+Medium (md) devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+Large (lg) devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+Extra (xl) large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+
+=============*/

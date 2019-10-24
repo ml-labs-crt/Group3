@@ -6,6 +6,8 @@ except ImportError:
 
 # Import the tweepy library
 import tweepy
+import csv
+import numpy as np
 
 # Variables that contains the user credentials to access Twitter API 
 ACCESS_TOKEN = '556088690-mNC0w7siuT1xpC2ejdcG6vCw7ZUPsHEY86oMvcpT'
@@ -23,30 +25,92 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, 
 
 #---------------------------------------------------------------------------------------------------------------------
 # wait_on_rate_limit= True;  will make the api to automatically wait for rate limits to replenish
-# wait_on_rate_limit_notify= Ture;  will make the api  to print a notification when Tweepyis waiting for rate limits to replenish
+# wait_on_rate_limit_notify= True;  will make the api to print a notification when Tweepyis waiting for rate limits to replenish
 #---------------------------------------------------------------------------------------------------------------------
 
+#---------------------------------------------------------------------------------------------------------------------
+# CSV Management
+# 
+#---------------------------------------------------------------------------------------------------------------------
+csvFile = open('Datasets/tweets.csv', 'a')
+csvWriter = csv.writer(csvFile)
 
 #---------------------------------------------------------------------------------------------------------------------
-# The following loop will print most recent statuses, including retweets, posted by the authenticating user and that user’s friends. 
-# This is the equivalent of /timeline/home on the Web.
-#---------------------------------------------------------------------------------------------------------------------
-
-#for status in tweepy.Cursor(api.home_timeline).items(200):
-#	print(status._json)
-	
-#---------------------------------------------------------------------------------------------------------------------
-# Twitter API development use pagination for Iterating through timelines, user lists, direct messages, etc. 
-# To help make pagination easier and Tweepy has the Cursor object.
-#---------------------------------------------------------------------------------------------------------------------
-
-
-#---------------------------------------------------------------------------------------------------------------------
-# Attempt to receive twitts by location.
+# Receive twitts by location.
 # geocode ----> [latitude,longitude,radius] --- [37.781157,-122.398720,1km]
 #---------------------------------------------------------------------------------------------------------------------
-for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="41.385100,2.173400,15km",languages=["es"]).items(100):
-    print(tweet.text)
-    print(tweet.geo)
-    print(tweet.created_at)
+count = 0
+done = 0
+for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.110000,200km",languages=["en"]).items(100000):
+    done = done + 1
+    #WITH GEO
+    # if "coordinates" in str(tweet.geo):
+    # 	##########
+    # 	## TEXT ##
+    # 	##########
+    # 	text = tweet.text.encode('utf-8')
+    # 	text = str(text).split("'")[1]
+    # 	#print(text)
+
+    # 	##############
+    # 	## Location ##
+    # 	##############
+    # 	location = tweet.geo
+    # 	location = (str(location).split(':'))[2]
+    # 	location = location.split('[')[1]
+    # 	location = location.split(']')[0]
+    # 	#print(location)
+
+    # 	##########
+    # 	## Date ##
+    # 	##########
+    # 	date = tweet.created_at
+    # 	#print(date)
+
+    # 	###########
+    # 	## Write ##
+    # 	###########
+    # 	csvWriter.writerow([date, text, location])
+
+    #WITH ENVIRONMENT KEY WORDS IN TEXT
+    #Init + Keywords import
+    tweetOK = 0
+
+
+    with open("keywords.txt", "r") as text: 
+        keywords = [] 
+        for line in text:
+            line = line.split("\n")[0]
+            keywords.append(line)
+            keywords.append(line.lower())
+            keywords.append(line.upper())
     
+    ##########
+    ## TEXT ##
+    ##########
+    text = tweet.text.encode('utf-8')
+    text = str(text).split("'")[1]
+    date = tweet.created_at
+    #Iteration of keywords
+    for word in keywords:
+        #If keyword found enable saving
+        if text.find(word) != -1:
+            tweetOK = 1
+    #Saving
+    if tweetOK == 1:
+        csvWriter.writerow([date, text])
+        count = count +1
+    print(done)
+    print(count)
+
+
+
+
+
+
+
+
+
+
+
+

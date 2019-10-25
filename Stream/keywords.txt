@@ -2,7 +2,6 @@ Abatement
 Air pollution
 Air quality
 Alternative energy sources
-BER
 Biodegradable waste
 Biodiversity
 Bioenergy
@@ -52,8 +51,6 @@ Kyoto agreement
 Landfill
 Municipal waste
 Noise pollution
-NPWS
-NSS
 Noxious gases
 Oil spill
 Organic food
@@ -64,7 +61,6 @@ Reforestation
 Renewable energy
 Renewable resource
 Reuse
-Smog
 Smokeless fuel
 Solar panel
 Sustainable development
@@ -75,7 +71,6 @@ UNESCO World Heritage
 Warmer Homes Scheme
 Waste management
 Waste prevention
-WEEE
 Wind energy
 Wind turbine
 Zero emissions

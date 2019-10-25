@@ -41,7 +41,7 @@ csvWriter = csv.writer(csvFile)
 #---------------------------------------------------------------------------------------------------------------------
 count = 0
 done = 0
-for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.110000,200km",languages=["en"]).items(100000):
+for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.110000,200km",languages=["en"]).items(115000):
     done = done + 1
     #WITH GEO
     # if "coordinates" in str(tweet.geo):
@@ -98,8 +98,10 @@ for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.1100
             tweetOK = 1
     #Saving
     if tweetOK == 1:
-        csvWriter.writerow([date, text])
-        count = count +1
+        #If it is not a RT
+        if text[0:2] != 'RT':
+            csvWriter.writerow([date, text])
+            count = count +1
     print(done)
     print(count)
 

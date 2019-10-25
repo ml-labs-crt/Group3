@@ -32,7 +32,7 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, 
 # CSV Management
 # 
 #---------------------------------------------------------------------------------------------------------------------
-csvFile = open('Datasets/tweets.csv', 'a')
+csvFile = open('Datasets/tweets3.csv', 'a')
 csvWriter = csv.writer(csvFile)
 
 #---------------------------------------------------------------------------------------------------------------------
@@ -41,41 +41,9 @@ csvWriter = csv.writer(csvFile)
 #---------------------------------------------------------------------------------------------------------------------
 count = 0
 done = 0
-for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.110000,200km",languages=["en"]).items(115000):
+for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.110000,200km",languages=["en"]).items(10000):
     done = done + 1
-    #WITH GEO
-    # if "coordinates" in str(tweet.geo):
-    # 	##########
-    # 	## TEXT ##
-    # 	##########
-    # 	text = tweet.text.encode('utf-8')
-    # 	text = str(text).split("'")[1]
-    # 	#print(text)
-
-    # 	##############
-    # 	## Location ##
-    # 	##############
-    # 	location = tweet.geo
-    # 	location = (str(location).split(':'))[2]
-    # 	location = location.split('[')[1]
-    # 	location = location.split(']')[0]
-    # 	#print(location)
-
-    # 	##########
-    # 	## Date ##
-    # 	##########
-    # 	date = tweet.created_at
-    # 	#print(date)
-
-    # 	###########
-    # 	## Write ##
-    # 	###########
-    # 	csvWriter.writerow([date, text, location])
-
-    #WITH ENVIRONMENT KEY WORDS IN TEXT
-    #Init + Keywords import
     tweetOK = 0
-
 
     with open("keywords.txt", "r") as text: 
         keywords = [] 
@@ -90,7 +58,21 @@ for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.1100
     ##########
     text = tweet.text.encode('utf-8')
     text = str(text).split("'")[1]
+    ##########
+    ## Date ##
+    ##########
     date = tweet.created_at
+    ##############
+    ## Location ##
+    ##############
+    if "coordinates" in str(tweet.geo):
+        location = tweet.geo
+        location = (str(location).split(':'))[2]
+        location = location.split('[')[1]
+        location = location.split(']')[0]
+    else:
+        location = '--'
+
     #Iteration of keywords
     for word in keywords:
         #If keyword found enable saving
@@ -100,7 +82,7 @@ for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.1100
     if tweetOK == 1:
         #If it is not a RT
         if text[0:2] != 'RT':
-            csvWriter.writerow([date, text])
+            csvWriter.writerow([date, text, location])
             count = count +1
     print(done)
     print(count)

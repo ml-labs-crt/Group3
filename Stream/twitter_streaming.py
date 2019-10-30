@@ -41,7 +41,7 @@ csvWriter = csv.writer(csvFile)
 #---------------------------------------------------------------------------------------------------------------------
 count = 0
 done = 0
-for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.110000,200km",languages=["en"]).items(10000):
+for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.110000,200km",languages=["en"]).items(1000):
     done = done + 1
     tweetOK = 0
 

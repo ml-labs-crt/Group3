@@ -1,0 +1,1 @@
+python Exporter.py --querysearch " " --near "53.058004,-8.110000" --within "200km" --since 2018-10-01 --until 2019-10-01 --maxtweets 10 --lang "en"

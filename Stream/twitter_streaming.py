@@ -32,7 +32,7 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, 
 # CSV Management
 # 
 #---------------------------------------------------------------------------------------------------------------------
-csvFile = open('Datasets/tweets3.csv', 'a')
+csvFile = open('Datasets/tweets4.csv', 'a')
 csvWriter = csv.writer(csvFile)
 
 #---------------------------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ csvWriter = csv.writer(csvFile)
 #---------------------------------------------------------------------------------------------------------------------
 count = 0
 done = 0
-for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.110000,200km",languages=["en"]).items(10000):
+for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.110000,200km",languages=["en"]).items(2500000):
     done = done + 1
     tweetOK = 0
 
@@ -86,15 +86,3 @@ for tweet in tweepy.Cursor(api.search,q="*",count=100,geocode="53.058004,-8.1100
             count = count +1
     print(done)
     print(count)
-
-
-
-
-
-
-
-
-
-
-
-
